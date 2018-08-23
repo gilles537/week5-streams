@@ -2,6 +2,7 @@ package be.pxl.streams;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import be.pxl.streams.Person.Gender;
 
@@ -34,6 +35,24 @@ public class Challenge4 {
 		// en als leeftijd de som van alle leeftijden
 		// Maak gebruik van de methode .reduce()
 		
+		//1
+		IntStream getallen = personen.stream().mapToInt(s -> s.getAge());
+		System.out.println("Het gemiddelde is: " + getallen.average().getAsDouble());
 
+		//2
+		System.out.println("Er staan " + personen.stream().filter(s -> s.getGender() == Gender.MALE).count() + " mannen op de lijst");
+		
+		//3
+		System.out.println(personen.stream().filter(s -> s.getGender() == Gender.MALE).filter(s -> s.getAge() > 24).count());
+		
+		//4
+		System.out.println(personen.stream().filter(s -> s.getGender() == Gender.MALE).mapToDouble(s -> s.getAge()).average().getAsDouble());
+		
+		//5
+		Person newPerson = personen.stream().reduce(new Person("", 0, Gender.FEMALE), (p1, p2) -> {
+			p1.setAge(p1.getAge() + p2.getAge());
+			p1.setName(p1.getName() + p2.getName().substring(0, 1));
+			return p1;
+		});
 	}
 }
